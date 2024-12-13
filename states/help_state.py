@@ -15,7 +15,6 @@ class HelpState(State):
     def process_input(self, key):
         if key == self.controller.adapter.key_escape: 
             self.quit()
-            # self.controller.change_state(self.controller.available_states.normal_state(self.controller))
         elif key in (self.controller.adapter.key_up,
                      self.controller.adapter.key_down,
                      self.controller.adapter.key_left,

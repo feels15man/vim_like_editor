@@ -45,30 +45,18 @@ class View(Observer):
         height, width = self.adapter.get_screen_size()
         controller = subject.controller
         text = ''
-        # set up text mode
         if subject.status_message:
             text = subject.status_message
         elif isinstance(controller.state, controller.available_states.command_state_obj()):
             text = subject.mode_string.c_str()
         elif isinstance(controller.state, controller.available_states.insert_state_obj()):
-            # text += f"INSERT -- {subject.command_buffer.c_str():^} {subject.cursor_y + 1:>}/{len(subject.buffer):>}"
-            # text += '-- INSERT --'
             tmp = int(width - 12 - 20)
             text += f"-- INSERT --{' ' * tmp}{subject.cursor_y + 1}/{len(subject.buffer)}"
-            # for _ in range(width - len(text) - 9):
-            #     text += ' '
-            # text += f'{subject.cursor_y + 1}/{len(subject.buffer)}'
         elif isinstance(controller.state, controller.available_states.normal_state_obj()):
             tmp = int((width - 12 - len(subject.command_buffer.c_str())) / 2 )
             text += f"-- NORMAL --{' ' * tmp}{subject.command_buffer.c_str()}\
             {subject.cursor_y + 1}/{len(subject.buffer)}"
-            # text += 'NORMAL --'
-            # for _ in range(width - len(text) - 9):
-            #     text += ' '
-            # text += f'{subject.cursor_y + 1}/{len(subject.buffer)}'
         elif isinstance(controller.state, controller.available_states.find_state_obj()):
-            # text += 'FIND --'
             text = subject.mode_string.c_str()
-        # mode_with_command = subject.mode_string.c_str()
         self.adapter.update_line(height - 1, text) 
         return

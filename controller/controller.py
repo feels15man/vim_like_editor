@@ -1,21 +1,11 @@
-# from normal_state import NormalState
-# from insert_state import InsertState
-# from find_state import FindState
-# from command_state import CommandState
 from MyString import MyString as MyString
 from states.available_states import AvailableStates
 
 
 class Controller():
     def __init__(self, adapter):
-        # self.normal_state = NormalState(self)
-        # self.insert_state = InsertState(self)
-        # self.find_state = FindState(self)
-        # self.command_state = CommandState(self)  # Н
-        # self.state = AvailableStates.init_state()
         self.available_states = AvailableStates()
         self.state = self.available_states.normal_state(self)
-        # self.state = self.normal_state
         self.search_type = None  # '/' или '?'
         self.adapter = adapter
 
@@ -35,7 +25,6 @@ class Controller():
         result = self.state.process_input(key)
 
         if isinstance(self.state, (self.available_states.command_state_obj(), self.available_states.find_state_obj())):
-        # if isinstance(self.state, (CommandState, FindState)):
             return result
 
         self.set_Text_View()

@@ -25,6 +25,5 @@ class Model(Subject):
         self.status_message = None
 
         self.mode_string = MyString("-- NORMAL MODE --")
-        # self.Text_String = None
         self.Text_String = MyString("")
         self.filename = None

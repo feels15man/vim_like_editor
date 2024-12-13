@@ -5,18 +5,6 @@ from adapter.view_adapter import ViewAdapter
 from model.model import Model
 
 class MyVIM():
-    def __init__(self):
-        return
-        self.adapter_controller = ControllerAdapter()
-        self.adapter_controller.initialize()
-        self.controller = Controller(self.adapter_controller)
-
-        self.adapter_view = ViewAdapter()
-        self.adapter_view.initialize()
-        self.view = View(self.adapter_view)
-
-        self.editor = Model(self.controller, self.view)
-        self.controller.set_model(self.editor)
     
     def run(self):
         adapter_controller = ControllerAdapter()

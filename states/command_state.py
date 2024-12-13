@@ -1,7 +1,6 @@
 from MyString import MyString
 import os
 from states.state import State
-# from available_states import AvailableStates
 
 
 DIR = ""
@@ -29,13 +28,11 @@ class CommandState(State):
             self.original_x = None
             self.original_y = None
             self.original_scroll_offset = None
-            # self.controller.change_state(self.controller.normal_state)
             self.controller.change_state(self.controller.available_states.normal_state(self.controller))
             self.controller.model.mode_string = MyString("-- NORMAL MODE --")
             self.command_buffer.clear()
 
         elif key == 10:  # Enter завершает ввод команды
-            # self.controller.change_state(self.controller.normal_state)
             self.controller.change_state(self.controller.available_states.normal_state(self.controller))
             self.controller.model.mode_string = MyString("-- NORMAL MODE --")
             self.controller.model.cursor_x = self.original_x

@@ -40,14 +40,11 @@ class FindState(State):
             self.original_y = None
             self.original_scroll_offset = None
 
-            # Если поиск назад, меняем индекс текущего результата
             if self.controller.search_type == '?':
-                # self.controller.model.search_results.reverse()
 
                 self.controller.model.search_index = len(self.controller.model.search_results)-1
             else:
                 self.controller.model.search_index = 0
-            # Перемещаемся к первому результату, если он есть
             if self.controller.model.search_results == [ ]:
                 self.controller.model.status_message = MyString("Pattern not found")
             else:
@@ -56,8 +53,6 @@ class FindState(State):
                 self.controller.model.cursor_y = y
                 self.controller.model.cursor_x = x
 
-            # Возврат в NormalState
-            # self.controller.change_state(self.controller.normal_state)
             self.controller.change_state(self.controller.available_states.normal_state(self.controller))
         elif key in (self.controller.adapter.key_backspace, 127, 8):
             if self.controller.model.find_buffer.length() > 0:
@@ -82,14 +77,12 @@ class FindState(State):
         results = []  # Список координат совпадений
         query_str = query.c_str()
 
-        # Если строка поиска пуста, возвращаем пустой список
         if not query_str:
             return results
 
-        if direction == 1:  # Поиск вперёд ('/')
+        if direction == 1: 
             for y, line in enumerate(self.controller.model.buffer[self.original_y:],
                                      start=self.original_y):
-                # Для текущей строки начинаем с позиции курсора, иначе с начала строки
                 line = line.c_str()
                 start_pos = self.original_y if y == self.original_y else 0
                 if start_pos >= len(line):  # Если курсор за пределами строки
@@ -102,11 +95,10 @@ class FindState(State):
                         break
                     results.append((y, pos))
                     x = pos + 1  # Двигаем курсор вперёд
-        else:  # Поиск назад ('?')
+        else: 
             for y, line in reversed(
                     list(enumerate(self.controller.model.buffer[: self.original_y + 1]))):
                 line = line.c_str()
-                # Для текущей строки начинаем с позиции курсора, иначе с конца строки
                 end_pos = self.original_x if y == self.original_y else line.length() - 1
                 if end_pos < 0:  # Если курсор перед началом строки
                     continue  # Пропускаем строку
@@ -120,6 +112,4 @@ class FindState(State):
                         results.append((y, pos))
                     x = pos + 1  # Двигаем курсор вперёд
 
-        # Возвращаем отсортированный список
         return sorted(results)
-

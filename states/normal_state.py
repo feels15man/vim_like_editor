@@ -7,22 +7,16 @@ class NormalState(State):
     def __init__(self, controller):
         super().__init__(controller)
     def process_input(self, key):
-        # Обработка навигации
         if key == self.controller.adapter.key_escape:  # Завершение работы
             return False
         if self.controller.model.command_buffer.c_str() == "r":
             self.replace_character(key)
             self.clear_buffer()
-            # self.controller.model.mode_string = MyString(
-            #     f"-- NORMAL MODE --\t\t {self.controller.model.command_buffer.c_str()}")
             return True
         if key == ord('i') and self.controller.model.command_buffer.c_str() != "d":  # Переход в режим вставки
-            # self.controller.model.mode_string = MyString("-- INSERT MODE --")
-            # self.controller.change_state(self.controller.insert_state)
             self.controller.change_state(self.controller.available_states.insert_state(self.controller))
             return True
         if key == ord('a') and self.controller.model.command_buffer.c_str() != "d":  # Переход в режим вставки
-            # self.controller.model.mode_string = MyString("-- INSERT MODE --")
             self.controller.model.cursor_x += 1
             self.controller.change_state(self.controller.available_states.insert_state(self.controller))
             return True

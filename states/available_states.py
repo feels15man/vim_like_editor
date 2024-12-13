@@ -6,10 +6,6 @@ from states.help_state import HelpState
 
 
 class AvailableStates():
-    # normal_state = NormalState
-    # find_state = FindState
-    # insert_state = InsertState
-    # command_state = CommandState
 
     def normal_state(self, controller):
         return NormalState(controller)
